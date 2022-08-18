@@ -1,5 +1,6 @@
 ﻿using BlogApp.Data;
 using BlogApp.Models;
+using BlogApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -9,20 +10,20 @@ namespace BlogApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        ApplicationDbContext _context;
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ApplicationDbContext _context;
+        private readonly IBlogPostService _blogPostService;
+        public HomeController(ILogger<HomeController> logger,
+                                ApplicationDbContext context,
+                                IBlogPostService blogPostService)
         {
             _logger = logger;
+            _context = context;
+            _blogPostService = blogPostService;
         }
 
         public async Task<IActionResult> AuthorPage()
         {
-            List<BlogPost> posts = await _context.BlogPosts
-                                                 .Include(b => b.Comments)
-                                                 .Include(b => b.Category)
-                                                 .Include(b => b.Tags)
-                                                 .ToListAsync();
-
+            List<BlogPost> posts = (await _blogPostService.GetAllBlogPostsAsync()).Where(b => b.IsPublished == true).ToList();
             return View(posts);
         }
 

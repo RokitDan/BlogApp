@@ -24,5 +24,13 @@ namespace BlogApp.Services.Interfaces
         public Task<List<BlogPost>> GetPopularBlogPostAsync(int count); //Defined by the number of comments made 
         public Task<List<BlogPost>> GetRecentBlogPostAsync(int count); //Defined by date created
 
+        //To Do: Add service method for search
+        public IEnumerable<BlogPost> Search(string searchString);
+
+
+
+
+
+
     }
 }

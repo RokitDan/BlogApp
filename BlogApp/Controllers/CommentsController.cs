@@ -62,7 +62,7 @@ namespace BlogApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BlogPostId,AuthorId,Created,LastUpdated,UpdateReason,Body")] Comment comment, string? slug)
+        public async Task<IActionResult> Create([Bind("Id,BlogPostId,AuthorId,Created,LastUpdated,UpdateReason,Body,Email")] Comment comment, string? slug)
         {
             if (ModelState.IsValid)
             {
@@ -70,6 +70,20 @@ namespace BlogApp.Controllers
                 comment.Created = DataUtility.GetPostGresDate(comment.Created);
 
                 _context.Add(comment);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Details", "BlogPosts", new { slug });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddNewComment([Bind(Prefix ="BlogPost")] Comment newComment, string? slug)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(newComment);
+
                 await _context.SaveChangesAsync();
             }
 

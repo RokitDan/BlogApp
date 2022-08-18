@@ -45,6 +45,18 @@ namespace BlogApp.Models
         [NotMapped]
         public virtual IFormFile? BlogPostImage { get; set; }
 
+        private Comment _newComment = new();
+        [NotMapped]
+        public Comment NewComment
+        {
+            get => _newComment;
+            set
+            {
+                _newComment = value;
+                _newComment.BlogPostId = Id;
+            }
+        }
+
 
         //Navigation Properties
         public virtual Category? Category { get; set; }

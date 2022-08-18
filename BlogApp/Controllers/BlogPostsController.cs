@@ -10,6 +10,7 @@ using BlogApp.Models;
 using BlogApp.Services;
 using BlogApp.Services.Interfaces;
 using BlogApp.Extensions;
+using X.PagedList;
 
 namespace BlogApp.Controllers
 {
@@ -32,6 +33,23 @@ namespace BlogApp.Controllers
             var applicationDbContext = _context.BlogPosts.Include(b => b.Category).Include(b => b.Tags);
             return View(await applicationDbContext.ToListAsync());
         }
+
+        public async Task<IActionResult> SearchIndex(string searchTerm, int? pageNum)
+        {
+
+            int pageSize = 4;
+            int page = pageNum ?? 1;
+
+            ViewData["SearchTerm"] = searchTerm;
+
+            IPagedList<BlogPost> blogPosts = await _blogPostService.Search(searchTerm).ToPagedListAsync(page, pageSize);
+
+
+            return View(blogPosts);
+        }
+
+
+
 
         // GET: BlogPosts/Details/5
         public async Task<IActionResult> Details(string? slug)

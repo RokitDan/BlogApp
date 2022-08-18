@@ -5,7 +5,7 @@ namespace BlogApp.Services
     public class ImageService : IImageService
     {
 
-        //TO DO: 
+         
         public string ConvertByteArrayToFile(byte[] fileData, string extension)
         {
             try
