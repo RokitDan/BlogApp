@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<BlogApp.Models.BlogPost>
 
+@using BlogApp.Enums
 @using BlogApp.Services.Interfaces
 
 @inject IImageService _ImageService
@@ -59,14 +60,7 @@
                     <div class="content-block post-list-view mt--30">
                         <div class="post-thumbnail">
                             <a href="post-details.html">
-                                @if (blogPost.ImageData != null)
-                                {
-                                    <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!)" alt="Post Images" />
-                                }
-                                else
-                                {
-                                    <img src="~/img/DefaultBlogImage.png" alt="Post Images" />
-                                }
+                                <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!, (int)DefaultImage.BlogPost)" alt="Post Images" />
                             </a>
                         </div>
                         <div class="post-content">
@@ -90,7 +84,7 @@
                                         <h6 class="post-author-name">
                                             <a class="hover-flip-item-wrapper" href="author.html">
                                                 <span class="hover-flip-item">
-                                                    <span data-text="Rahabi Khan">Rahabi Khan</span>
+                                                    <span data-text="">Danny Schellenberger</span>
                                                 </span>
                                             </a>
                                         </h6>
@@ -124,14 +118,7 @@
                                 <li class="cat-item">
                                     <a href="#" class="inner">
                                         <div class="thumbnail">
-                                            @if (category.ImageData != null)
-                                            {
-                                                <img src="@_ImageService.ConvertByteArrayToFile(category.ImageData!,category.ImageType!)">
-                                            }
-                                            else
-                                            {
-                                                <img src="~/img?DefaultCategoryImage.png">
-                                            }
+                                            <img src="@_ImageService.ConvertByteArrayToFile(category.ImageData!,category.ImageType!,(int)DefaultImage.Category))">
                                         </div>
                                         <div class="content">
                                             <h5 class="title">@category.Name</h5>
@@ -162,26 +149,12 @@
                             @foreach (BlogPost blogPost in await _BlogPostService.GetPopularBlogPostAsync(3))
                             {
                                 <div class="thumbnail">
-                                    @if (blogPost.IsPublished == true)
-                                    {
-                                        <a href="post-details.html">
-                                            @if (blogPost.ImageData != null)
-                                            {
-                                                <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!)" alt="Post Images" />
-                                            }
-                                            else
-                                            {
-                                                <img src="~/img/DefaultBlogImage.png" alt="Post Images" />
-                                            }
-                                        </a>
-
-
-
-                                        <div class="content">
-                                            <h5 class="title">@blogPost.Title</h5>
-                                        </div>
-                                    }
-
+                                    <a href="post-details.html">
+                                        <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!,(int)DefaultImage.Category)" alt="Post Images" />
+                                    </a>
+                                    <div class="content">
+                                        <h5 class="title">@blogPost.Title</h5>
+                                    </div>
                                 </div>
                             }
 

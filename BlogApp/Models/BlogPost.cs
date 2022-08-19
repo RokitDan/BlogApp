@@ -41,21 +41,11 @@ namespace BlogApp.Models
         public string? ImageType { get; set; } //= "";
 
         //Property for passing file information from the form(html) to the post.
-        //Also not saved in teh database via [NotMapped] attribute
+        //Also not saved in the database via [NotMapped] attribute
         [NotMapped]
         public virtual IFormFile? BlogPostImage { get; set; }
 
-        private Comment _newComment = new();
-        [NotMapped]
-        public Comment NewComment
-        {
-            get => _newComment;
-            set
-            {
-                _newComment = value;
-                _newComment.BlogPostId = Id;
-            }
-        }
+
 
 
         //Navigation Properties

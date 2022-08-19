@@ -4,12 +4,15 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using BlogApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using BlogApp.Services;
+using BlogApp.Services.Interfaces;
 
 namespace BlogApp.Areas.Identity.Pages.Account.Manage
 {
@@ -17,6 +20,7 @@ namespace BlogApp.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly SignInManager<BlogUser> _signInManager;
+        private readonly IImageService _imageService;
 
         public IndexModel(
             UserManager<BlogUser> userManager,
@@ -59,6 +63,27 @@ namespace BlogApp.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [StringLength(40, ErrorMessage = "The {0} must be at least {2} and at most {1} characters", MinimumLength = 2)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(40, ErrorMessage = "The {0} must be at least {2} and at most {1} characters", MinimumLength = 2)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+
+            //Propertires for storing image
+            public byte[] ImageData { get; set; } //= Array.Empty<byte>();
+            public string ImageType { get; set; } //= "";
+
+            //Property for passing file information from the form(html) to the post.
+            //Also not saved in teh database via [NotMapped] attribute
+            [NotMapped]
+            public virtual IFormFile? ImageFile { get; set; }
+
         }
 
         private async Task LoadAsync(BlogUser user)
@@ -70,7 +95,11 @@ namespace BlogApp.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                ImageData = user.ImageData
+
             };
         }
 
@@ -89,6 +118,7 @@ namespace BlogApp.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -99,6 +129,23 @@ namespace BlogApp.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
+
+            //custom code
+
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+
+            if (Input.ImageFile != null)
+            {
+                user.ImageData = await _imageService.ConvertFileToByteArrayAsync(Input.ImageFile);
+                user.ImageType = Input.ImageFile.ContentType;
+
+            }
+
+            await _userManager.UpdateAsync(user);
+
+            //end custom code
+
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)

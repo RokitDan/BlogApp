@@ -11,9 +11,11 @@ using BlogApp.Services;
 using BlogApp.Services.Interfaces;
 using BlogApp.Extensions;
 using X.PagedList;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogApp.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class BlogPostsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -30,10 +32,13 @@ namespace BlogApp.Controllers
         // GET: BlogPosts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.BlogPosts.Include(b => b.Category).Include(b => b.Tags);
+            //To do: Use service
+
+            var applicationDbContext = _context.BlogPosts.Where(b => b.IsDeleted == false).Include(b => b.Category).Include(b => b.Tags);
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> SearchIndex(string searchTerm, int? pageNum)
         {
 
@@ -52,6 +57,7 @@ namespace BlogApp.Controllers
 
 
         // GET: BlogPosts/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(string? slug)
         {
             if (string.IsNullOrEmpty(slug))
@@ -75,6 +81,7 @@ namespace BlogApp.Controllers
         }
 
         // GET: BlogPosts/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
@@ -134,6 +141,7 @@ namespace BlogApp.Controllers
         }
 
         // GET: BlogPosts/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.BlogPosts == null)
@@ -233,6 +241,7 @@ namespace BlogApp.Controllers
         }
 
         // GET: BlogPosts/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.BlogPosts == null)
@@ -261,10 +270,8 @@ namespace BlogApp.Controllers
                 return Problem("Entity set 'ApplicationDbContext.BlogPosts'  is null.");
             }
             var blogPost = await _context.BlogPosts.FindAsync(id);
-            if (blogPost != null)
-            {
-                _context.BlogPosts.Remove(blogPost);
-            }
+
+            blogPost!.IsDeleted = true;
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

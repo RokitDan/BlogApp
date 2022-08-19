@@ -1,4 +1,14 @@
-﻿<!doctype html>
+﻿@using BlogApp.Enums
+@using BlogApp.Services.Interfaces;
+@using Microsoft.AspNetCore.Identity;
+
+
+
+@inject IImageService _ImageService
+@inject UserManager<BlogUser> _UserManager
+
+
+<!doctype html>
 <html class="no-js" lang="en">
 
 <head>
@@ -25,6 +35,9 @@
 </head>
 
 <body>
+
+    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("AuthorPage", "Home", new { area = "" })">
+    </form>
 
     <div class="main-wrapper">
         <div class="mouse-cursor cursor-outer"></div>
@@ -73,7 +86,7 @@
                                                     <a href="#">Posts</a>
                                                     <ul class="axil-submenu">
                                                         <li>
-                                                            <a class="hover-flip-item-wrapper" href="post-format-standard.html">
+                                                            <a asp-controller="BlogPosts" asp-action="Index">
                                                                 <span class="">
                                                                     <span>All Posts</span>
                                                                 </span>
@@ -95,8 +108,12 @@
                                                         </li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="home-lifestyle-blog.html">About</a></li>
-                                                <li><a href="home-tech-blog.html">Contact</a></li>
+
+
+
+
+
+
                                                 @if (User.IsInRole("Administrator"))
                                                 {
                                                     <li class="menu-item-has-children">
@@ -155,14 +172,24 @@
                                 <form asp-controller="BlogPosts" asp-action="SearchIndex" class="header-search-form">
                                     <div class="axil-search form-group">
                                         <button type="submit" class="search-button"><i class="fal fa-search"></i></button>
-                                        <input type="text" class="form-control" placeholder="Search" name="SearchTerm" id="SearchTerm">
+                                        <input type="text" class="form-control" placeholder="Search" name="SearchTerm" id="SearchTerm" />
                                     </div>
                                 </form>
                             </div>
+
                             <ul class="metabar-block">
-                                <li class="icon"><a href="#"><i class="fas fa-bookmark"></i></a></li>
-                                <li class="icon"><a href="#"><i class="fas fa-bell"></i></a></li>
-                                <li><a href="#"><img src="~/assets/images/others/author.png" alt="Author Images"></a></li>
+                                @if (!User.Identity!.IsAuthenticated)
+                                {
+                                    <li class=""><a class="btn btn-outline-success" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-sign-in fa-2x" aria-hidden="true"></i></a></li>
+                                }
+                                else
+                                {
+
+                                    BlogUser blogUser = await _UserManager.GetUserAsync(User);
+
+                                    <li class=""><a class="btn btn-default" href="javascript:document.getElementById('logoutForm').submit();"><i class="fa fa-sign-out fa-3x" aria-hidden="true"></i></a></li>
+                                    <li><a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><img src="@_ImageService.ConvertByteArrayToFile(blogUser.ImageData!, blogUser.ImageType!, (int)DefaultImage.BlogUser)" alt="Author Images"></a></li>
+                                }
                             </ul>
                             <!-- Start Hamburger Menu  -->
                             <div class="hamburger-menu d-block d-xl-none">
@@ -235,7 +262,7 @@
                             <li><a href="author.html">Author Page</a></li>
                             <li><a href="about.html">About Page</a></li>
                             <li><a href="maintenance.html">Maintenance</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="contact.html">Contact Me</a></li>
                         </ul>
                     </li>
                     <li><a href="404.html">404 Page</a></li>

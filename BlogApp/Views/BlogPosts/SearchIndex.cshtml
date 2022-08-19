@@ -1,5 +1,6 @@
 ﻿@model IPagedList<BlogPost>
 
+@using BlogApp.Enums
 @using X.PagedList
 @using X.PagedList.Web.Common
 @using BlogApp.Services.Interfaces
@@ -47,14 +48,9 @@
                                                 {
                                                     <tr>
                                                         <td class="col-5">
-                                                            @if (blogPost.ImageData != null)
-                                                            {
-                                                                <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!)" alt="Post Images" />
-                                                            }
-                                                            else
-                                                            {
-                                                                <img src="~/img/DefaultBlogImage.png" alt="Post Images" />
-                                                            }
+                                                          
+                                                                <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!,(int)DefaultImage.BlogPost))" alt="Post Images" />
+                                                           
                                                         </td>
                                                         <td class="col-7">
                                                             @blogPost.Title

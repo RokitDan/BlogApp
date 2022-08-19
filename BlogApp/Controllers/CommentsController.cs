@@ -8,13 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using BlogApp.Data;
 using BlogApp.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogApp.Controllers
 {
     public class CommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<BlogUser> _userManager;
+        private readonly UserManager<BlogUser> _userManager; //UserManage is designed to accept Identity type parameters or its children
         public CommentsController(ApplicationDbContext context,
                                   UserManager<BlogUser> userManager)
         {
@@ -62,8 +63,11 @@ namespace BlogApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BlogPostId,AuthorId,Created,LastUpdated,UpdateReason,Body,Email")] Comment comment, string? slug)
+        [Authorize]
+        public async Task<IActionResult> Create([Bind("Id,BlogPostId,Body")] Comment comment, string? slug)
         {
+            ModelState.Remove("AuthorId");
+
             if (ModelState.IsValid)
             {
                 comment.AuthorId = _userManager.GetUserId(User);
@@ -76,21 +80,10 @@ namespace BlogApp.Controllers
             return RedirectToAction("Details", "BlogPosts", new { slug });
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddNewComment([Bind(Prefix ="BlogPost")] Comment newComment, string? slug)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(newComment);
 
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToAction("Details", "BlogPosts", new { slug });
-        }
 
         // GET: Comments/Edit/5
+        [Authorize(Roles = "Administrator, Moderator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Comments == null)
@@ -146,6 +139,7 @@ namespace BlogApp.Controllers
         }
 
         // GET: Comments/Delete/5
+        [Authorize(Roles = "Administrator, Moderator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Comments == null)

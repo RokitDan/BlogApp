@@ -1,5 +1,6 @@
 using BlogApp.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using BlogApp.Models;
 using BlogApp.Services.Interfaces;

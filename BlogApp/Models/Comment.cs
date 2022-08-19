@@ -23,8 +23,7 @@ namespace BlogApp.Models
 
         public string? UpdateReason { get; set; }
 
-        [StringLength(5000, ErrorMessage = "The {0} must be at least {2} and at most {1} characters", MinimumLength = 2)]
-        public string? Email { get; set; }
+
 
         //Body of comment
         [Required]
