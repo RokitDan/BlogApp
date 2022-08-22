@@ -8,6 +8,8 @@ namespace BlogApp.Services
         private readonly string _defaultBlogPostImageSrc = "/img/ContactProLight.png";
         private readonly string _defaultCategoryImageSrc = "/img/DefaultContactImage.png";
 
+        //C:\Users\dlees\OneDrive\Documents\codeCF\vsRepos\BlogApp\BlogApp\wwwroot\img\DefaultContactImage.png
+
         //TO DO: Blog Customizations
 
         public string ConvertByteArrayToFile(byte[] fileData, string extension, int imageType)
@@ -20,13 +22,8 @@ namespace BlogApp.Services
                     case 1: return _defaultBlogUserImageSrc; //BlogUser Image
                     case 2: return _defaultBlogPostImageSrc; //BlogPost Image
                     case 3: return _defaultCategoryImageSrc; //Catagory Image
-
                 }
-
-
             }
-
-
             try
             {
                 string imageBase64Data = Convert.ToBase64String(fileData);
@@ -57,7 +54,6 @@ namespace BlogApp.Services
             {
                 throw;
             }
-
         }
     }
 }

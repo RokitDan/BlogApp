@@ -26,6 +26,7 @@ namespace BlogApp.Services
             try
             {
                 string newSlug = title.Slugify();
+
                 if (blogId == 0)
                 {
                     return !(await _context.BlogPosts.AnyAsync(b => b.Slug == newSlug));
@@ -47,10 +48,8 @@ namespace BlogApp.Services
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
 
         public async Task AddTagToBlogPostAsync(int tagId, int blogPostId)
@@ -219,6 +218,8 @@ namespace BlogApp.Services
                 else
                 {
                     searchString = searchString.Trim().ToLower();
+
+                    var popularBlogPosts = _context.BlogPosts.Where(x => x.Comments.Count > 20).ToList();
 
                     blogPosts = _context.BlogPosts.Where(b => b.Title!.ToLower().Contains(searchString) ||
                                                               b.Abstract!.ToLower().Contains(searchString) ||

@@ -41,7 +41,6 @@ namespace BlogApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SearchIndex(string searchTerm, int? pageNum)
         {
-
             int pageSize = 4;
             int page = pageNum ?? 1;
 
@@ -49,6 +48,25 @@ namespace BlogApp.Controllers
 
             IPagedList<BlogPost> blogPosts = await _blogPostService.Search(searchTerm).ToPagedListAsync(page, pageSize);
 
+
+            List<string> firstNameList = new();
+
+            firstNameList.Add("Danny");
+            firstNameList.Add("Vince");
+            firstNameList.Add("Bethany");
+            firstNameList.Add("Dorothy");
+
+            //List<string> namesThatStartWithD = new();
+
+            //foreach (string firstName in firstNameList)
+            //{
+            //    if (firstName.StartsWith("D"))
+            //    {
+            //        namesThatStartWithD.Add(firstName);
+            //    }
+            //}
+
+            //namesThatStartWithD = firstNameList.Where(x => x.StartsWith("D")).ToList();
 
             return View(blogPosts);
         }
@@ -111,8 +129,8 @@ namespace BlogApp.Controllers
                     ViewData["BlogPostTags"] = new MultiSelectList(_context.Tags, "Id", "Name");
 
                     return View(blogPost);
-
                 }
+
                 blogPost.Slug = blogPost.Title!.Slugify();
 
                 //Image
@@ -122,20 +140,25 @@ namespace BlogApp.Controllers
                     blogPost.ImageType = blogPost.BlogPostImage.ContentType;
                 }
 
-                foreach (int tagId in selectedTags)
+                try
                 {
+                    _context.Add(blogPost);
+                    await _context.SaveChangesAsync();
 
-                    Tag tag = _context.Tags.Find(tagId)!;
-                    blogPost.Tags.Add(tag);
+                    foreach (int tagId in selectedTags)
+                    {
+                        Tag tag = _context.Tags.Find(tagId)!;
+                        blogPost.Tags.Add(tag);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
                 }
 
-
-
-
-                _context.Add(blogPost);
-                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", blogPost.CategoryId);
             return View(blogPost);
         }
