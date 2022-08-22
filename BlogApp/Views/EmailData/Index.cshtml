@@ -1,0 +1,33 @@
+﻿@model BlogApp.Models.EmailData;
+
+<div class="p-2">
+    <form asp-action="SendEmailAdmin" asp-controller="EmailData" method="post">
+
+        @*User Email Address*@
+        @if (User.Identity!.IsAuthenticated == false)
+        {
+            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login to Send Email</a>
+        }
+        else
+        {
+            @*Email Subject Line*@
+            <div>
+                <label asp-for="EmailSubject">Enter Subject line</label>
+                <input type="text" asp-for="EmailSubject" />
+            </div>
+
+            @*Email Message*@
+            <div>
+                <label asp-for="EmailMessage">Enter Message</label>
+                <textarea type="text" asp-for="EmailMessage" rows="5"></textarea>
+            </div>
+
+            <div class="col text-end">
+                <button class="btn btn-primary rounded-pill btnlinks" type="submit">Send</button>
+            </div>
+        }
+    </form>
+</div>
+<div class="p-2">
+    <a asp-action="Index">Back to List</a>
+</div>

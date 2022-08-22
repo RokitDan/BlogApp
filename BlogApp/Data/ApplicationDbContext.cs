@@ -15,5 +15,6 @@ namespace BlogApp.Data
         public virtual DbSet<Tag> Tags { get; set; } = default!;
         public virtual DbSet<Category> Categories { get; set; } = default!;
         public virtual DbSet<Comment> Comments { get; set; } = default!;
+        public IEnumerable<object> BlogUser { get; internal set; }
     }
 }

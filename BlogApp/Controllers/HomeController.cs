@@ -1,9 +1,11 @@
 ﻿using BlogApp.Data;
 using BlogApp.Models;
 using BlogApp.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 
 namespace BlogApp.Controllers
 {
@@ -12,13 +14,16 @@ namespace BlogApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly IBlogPostService _blogPostService;
+        private readonly UserManager<BlogUser> _userManager;
         public HomeController(ILogger<HomeController> logger,
                                 ApplicationDbContext context,
-                                IBlogPostService blogPostService)
+                                IBlogPostService blogPostService,
+                                UserManager<BlogUser> userManager)
         {
             _logger = logger;
             _context = context;
             _blogPostService = blogPostService;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> AuthorPage()
@@ -42,5 +47,10 @@ namespace BlogApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+       
+
+
+
     }
 }
