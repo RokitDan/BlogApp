@@ -113,7 +113,7 @@ namespace BlogApp.Data
                     EmailConfirmed = true
                 };
 
-                await userManager.CreateAsync(adminUser, configuration["AdminPwd"]);
+                await userManager.CreateAsync(adminUser, configuration["AdminPwd"] ?? Environment.GetEnvironmentVariable("AdminPwd"));
                 await userManager.AddToRoleAsync(adminUser, _adminRole);
 
             }
@@ -159,7 +159,7 @@ namespace BlogApp.Data
                     EmailConfirmed = true
                 };
 
-                await userManager.CreateAsync(modUser, configuration["ModeratorPwd"]);
+                await userManager.CreateAsync(modUser, configuration["ModeratorPwd"] ?? Environment.GetEnvironmentVariable("ModeratorPwd"));
                 await userManager.AddToRoleAsync(modUser, _modRole);
 
             }
