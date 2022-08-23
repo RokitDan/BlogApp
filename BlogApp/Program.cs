@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using BlogApp.Models;
 using BlogApp.Services.Interfaces;
 using BlogApp.Services;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,9 +32,51 @@ builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IBlogPostService, BlogPostService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+
+builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+});
+
 builder.Services.AddMvc();
 
+// Swagger interface for API access
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "CFBlogNet6 API",
+        Version = "v1",
+        Description = "Serving up Blog data using .Net 6",
+        Contact = new OpenApiContact
+        {
+            Name = "Danny Schellenberger",
+            Email = "dleeschelltest@gmail.com"
+
+        }
+    });
+    // using System.Reflection;
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
+
+
+//Configure CORS policy
+builder.Services.AddCors(obj =>
+{
+    obj.AddPolicy("DefaultPolicy",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
+
 var app = builder.Build();
+app.UseCors("DefaultPolicy");
+
+
 var scope = app.Services.CreateScope();
 await DataUtility.SeedDataAsync(scope.ServiceProvider);
 
@@ -47,6 +91,17 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "PublicAPI v1");
+    c.InjectStylesheet("/css/swagger.css");
+    c.InjectJavascript("/js/swagger.js");
+    c.DocumentTitle = "CFBlogNet6 Public API";
+});
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

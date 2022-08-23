@@ -3,13 +3,20 @@
 <div class="p-2">
     <form asp-action="SendEmailAdmin" asp-controller="EmailData" method="post">
 
-        @*User Email Address*@
+
+
         @if (User.Identity!.IsAuthenticated == false)
         {
             <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login to Send Email</a>
         }
         else
         {
+            @*User Email Address*@
+            <div>
+                <label>@Model.UserEmail</label>
+                <input type="hidden" asp-for="UserEmail" />
+            </div>
+
             @*Email Subject Line*@
             <div>
                 <label asp-for="EmailSubject">Enter Subject line</label>

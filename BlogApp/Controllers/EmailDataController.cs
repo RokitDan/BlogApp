@@ -32,9 +32,12 @@ namespace BlogApp.Controllers
             _emailService = emailService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            EmailData emailData = new();
+            emailData.UserEmail = (await _userManager.GetUserAsync(User))?.Email;
+
+            return View(emailData);
         }
 
 
@@ -46,16 +49,19 @@ namespace BlogApp.Controllers
         {
             BlogUser blogUser = await _userManager.GetUserAsync(User);
 
+            //get user email address
+
+            ModelState.Remove("BlogUserId");
             if (ModelState.IsValid)
             {
                 try
                 {
                     await _emailService.SendEmailAsync(blogUser.Email, emailData.EmailSubject, emailData.EmailMessage);
-                    return RedirectToAction("Index", "BlogPosts", new { swalMessage = "Success: Email Sent!" });
+                    return RedirectToAction("AuthorPage", "Home", new { swalMessage = "Success: Email Sent!" });
                 }
                 catch
                 {
-                    return RedirectToAction("Index", "EmailAdmin", new { swalMessage = "Error, Email Not Sent!" });
+                    return RedirectToAction("Index", "EmailData", new { swalMessage = "Error, Email Not Sent!" });
                     throw;
                 }
             }
