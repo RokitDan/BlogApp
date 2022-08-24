@@ -34,11 +34,11 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
-builder.Services.AddAuthentication().AddGoogle(googleOptions =>
-{
-    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-});
+//builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+//{
+//    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+//    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+//});
 
 builder.Services.AddMvc();
 
@@ -47,7 +47,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "CFBlogNet6 API",
+        Title = "BlogApp API",
         Version = "v1",
         Description = "Serving up Blog data using .Net 6",
         Contact = new OpenApiContact
@@ -98,7 +98,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "PublicAPI v1");
     c.InjectStylesheet("/css/swagger.css");
     c.InjectJavascript("/js/swagger.js");
-    c.DocumentTitle = "CFBlogNet6 Public API";
+    c.DocumentTitle = "BlogApp Public API";
 });
 
 
@@ -118,7 +118,7 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=AuthorPage}/{id?}");
 app.MapRazorPages();
 
 app.Run();
