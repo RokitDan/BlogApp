@@ -51,7 +51,7 @@ namespace BlogApp.Services
                 await smtpClient.ConnectAsync(host, port, SecureSocketOptions.StartTls);
                 await smtpClient.AuthenticateAsync(emailSender, _mailSettings.Password ?? Environment.GetEnvironmentVariable("Password"));
 
-                await smtpClient.SendAsync(newEmail);
+                await smtpClient.SendAsync(newEmail); 
                 await smtpClient.DisconnectAsync(true);
 
             }
