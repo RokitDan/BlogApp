@@ -56,7 +56,7 @@
                     <!-- Start Post List  -->
                     <div class="content-block post-list-view mt--30">
                         <div class="post-thumbnail">
-                            <a href="post-details.html">
+                            <a asp-controller="BlogPosts" asp-action="Details">
                                 <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!, (int)DefaultImage.BlogPost)" alt="Post Images" />
                             </a>
                         </div>
@@ -106,6 +106,16 @@
             <div class="col-lg-4 col-xl-4 mt_md--40 mt_sm--40">
                 <!-- Start Sidebar Area  -->
                 <div class="sidebar-inner">
+                    <!-- Start Search Widget  -->
+                    <div class="axil-single-widget widget widget_search mb--30">
+                        <h5 class="widget-title">Search</h5>
+                        <form action="#">
+                            <div class="axil-search form-group">
+                                <button type="submit" class="search-button"><i class="fal fa-search"></i></button>
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                        </form>
+                    </div>
 
                     <!-- Start Single Widget  -->
                     <div class="axil-single-widget widget widget_categories mb--30">
@@ -114,7 +124,7 @@
                             {
                                 <li class="cat-item">
                                     <a href="#" class="inner">
-                                        <div class="thumbnail">
+                                        <div class="thumbnail square-img-container">
                                             <img src="@_ImageService.ConvertByteArrayToFile(category.ImageData!,category.ImageType!,(int)DefaultImage.Category))">
                                         </div>
                                         <div class="content">
@@ -125,88 +135,29 @@
                             }
                         </ul>
                     </div>
-                    <!-- End Single Widget  -->
-                    <!-- Start Single Widget  -->
-                    <div class="axil-single-widget widget widget_search mb--30">
-                        <h5 class="widget-title">Search</h5>
-                        <form action="#">
-                            <div class="axil-search form-group">
-                                <button type="submit" class="search-button"><i class="fal fa-search"></i></button>
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                        </form>
-                    </div>
-                    <!-- End Single Widget  -->
+
+
+
                     <!-- Start Single Widget  -->
                     <div class="axil-single-widget widget widget_postlist mb--30">
-                        <h5 class="widget-title">Popular on Blogar</h5>
+                        <h5 class="widget-title">Popular Posts</h5>
                         <!-- Start Post List  -->
                         <div class="post-medium-block">
-
-                            @foreach (BlogPost blogPost in await _BlogPostService.GetPopularBlogPostAsync(3))
-                            {
-                                <div class="thumbnail">
-                                    <a href="post-details.html">
-                                        <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!,(int)DefaultImage.Category)" alt="Post Images" />
-                                    </a>
-                                    <div class="content">
-                                        <h5 class="title">@blogPost.Title</h5>
-                                    </div>
-                                </div>
-                            }
-
-                            <div class="content-block post-medium mb--20">
-                                <div class="post-thumbnail">
-
-
-
-
-
-
-
-                                    <a href="post-details.html">
-                                        <img src="~/assets/images/small-images/blog-sm-01.jpg" alt="Post Images">
-                                    </a>
-                                </div>
-                                <div class="post-content">
-                                    <h6 class="title">
+                            <div class="row row-col-1 row-col-lg-2">
+                                @foreach (BlogPost blogPost in await _BlogPostService.GetPopularBlogPostAsync(3))
+                                {
+                                    <div class="col square-img-container">
                                         <a href="post-details.html">
-                                            The underrated design book that transformed the way I
-                                            work
+                                            <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!,(int)DefaultImage.Category)" alt="Post Images" class="square-img rounded-3"/>
                                         </a>
-                                    </h6>
-                                    <div class="post-meta">
-                                        <ul class="post-meta-list">
-                                            <li>Feb 17, 2019</li>
-                                            <li>300k Views</li>
-                                        </ul>
+                                        <div class="content">
+                                            <h5 class="title">@blogPost.Title</h5>
+                                        </div>
                                     </div>
-                                </div>
+                                }
                             </div>
 
-                            <!-- Start Single Post  -->
-                            @* <div class="content-block post-medium mb--20">
-                            <div class="post-thumbnail">
-                            <a href="post-details.html">
-                            <img src="~/assets/images/small-images/blog-sm-01.jpg" alt="Post Images">
-                            </a>
-                            </div>
-                            <div class="post-content">
-                            <h6 class="title">
-                            <a href="post-details.html">
-                            The underrated design book that transformed the way I
-                            work
-                            </a>
-                            </h6>
-                            <div class="post-meta">
-                            <ul class="post-meta-list">
-                            <li>Feb 17, 2019</li>
-                            <li>300k Views</li>
-                            </ul>
-                            </div>
-                            </div>
-                            </div>*@
-                            <!-- End Single Post  -->
+
 
 
                         </div>
@@ -215,36 +166,41 @@
                     </div>
                     <!-- End Single Widget  -->
                     <!-- Start Single Widget  -->
+                    <div class="axil-single-widget widget widget_instagram mb--30">
+                        <h5 class="widget-title">Recent Blogs</h5>
+                        <!-- Start Post List  -->
+                        <div class="post-medium-block">
+                            <div class="instagram-post-list-wrapper">
+
+                                @*//Use blog post service to create list of recent items*@
+                                @*//Loop over and create list item for each recent blog.*@
+                                @foreach (BlogPost blogPost in await _BlogPostService.GetRecentBlogPostAsync(3))
+                                {
+                                    <div class="square-img-container">
+                                        <a href="post-details.html" >
+                                            <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!,(int)DefaultImage.Category)" alt="Post Images" class="square-img rounded-3"/>
+                                        </a>
+                                        <div class="content">
+                                            <h5 class="title">@blogPost.Title</h5>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <!-- End Post List  -->
+                    </div>
+
+                    <!-- Start Stay in Touch Widget  -->
                     <div class="axil-single-widget widget widget_social mb--30">
                         <h5 class="widget-title">Stay In Touch</h5>
                         <!-- Start Post List  -->
                         <ul class="social-icon md-size justify-content-center">
-                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fab fa-slack"></i></a></li>
-                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                            <li><a href="https://www.linkedin.com/in/danny-schellenberger-9b4b0166/"><i class="fab fa-linkedin-in"></i></a></li>
+                            <li><a href="https://github.com/RokitDan"><i class="fab fa-github"></i></a></li>
                         </ul>
                         <!-- End Post List  -->
                     </div>
-                    <!-- End Single Widget  -->
-                    <!-- Start Single Widget  -->
-                    <div class="axil-single-widget widget widget_instagram mb--30">
-                        <h5 class="widget-title">Recent Blogs</h5>
-                        <!-- Start Post List  -->
-                        <ul class="instagram-post-list-wrapper">
 
-                            @*//Use blog post service to create list of recent items*@
-                            @*//Loop over and create list item for each recent blog.*@
-                            <li class="instagram-post-list">
-                                <a href="#">
-                                    <img src="~/assets/images/small-images/instagram-01.jpg" alt="Instagram Images">
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- End Post List  -->
-                    </div>
-                    <!-- End Single Widget  -->
                 </div>
                 <!-- End Sidebar Area  -->
 
@@ -256,9 +212,9 @@
 </div>
 
 <!-- End Post List Wrapper  -->
-<!-- Start Instagram Area  -->
-<div class="axil-instagram-area axil-section-gap bg-color-grey">
-    <div class="container">
+@*<!-- Start Instagram Area  -->
+@*<div class="axil-instagram-area axil-section-gap bg-color-grey">*@
+@*<div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
@@ -266,48 +222,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt--30">
-            <div class="col-lg-12">
-                <ul class="instagram-post-list">
-                    <li class="single-post">
-                        <a href="#">
-                            <img src="~/assets/images/small-images/instagram-md-01.jpg" alt="Instagram Images">
-                            <span class="instagram-button"><i class="fab fa-instagram"></i></span>
-                        </a>
-                    </li>
-                    <li class="single-post">
-                        <a href="#">
-                            <img src="~/assets/images/small-images/instagram-md-02.jpg" alt="Instagram Images">
-                            <span class="instagram-button"><i class="fab fa-instagram"></i></span>
-                        </a>
-                    </li>
-                    <li class="single-post">
-                        <a href="#">
-                            <img src="~/assets/images/small-images/instagram-md-03.jpg" alt="Instagram Images">
-                            <span class="instagram-button"><i class="fab fa-instagram"></i></span>
-                        </a>
-                    </li>
-                    <li class="single-post">
-                        <a href="#">
-                            <img src="~/assets/images/small-images/instagram-md-04.jpg" alt="Instagram Images">
-                            <span class="instagram-button"><i class="fab fa-instagram"></i></span>
-                        </a>
-                    </li>
-                    <li class="single-post">
-                        <a href="#">
-                            <img src="~/assets/images/small-images/instagram-md-05.jpg" alt="Instagram Images">
-                            <span class="instagram-button"><i class="fab fa-instagram"></i></span>
-                        </a>
-                    </li>
-                    <li class="single-post">
-                        <a href="#">
-                            <img src="~/assets/images/small-images/instagram-md-06.jpg" alt="Instagram Images">
-                            <span class="instagram-button"><i class="fab fa-instagram"></i></span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+
     </div>
-</div>
+</div>*@
 <!-- End Instagram Area  -->

@@ -7752,13 +7752,18 @@ Breadcrumb Styles
   margin-bottom: 0;
 }
 
+
+
+
+/*<------------------------------------------>*/
+
 .my_switcher {
   position: fixed;
   right: -30px;
   top: 50%;
-  -webkit-transform: translateY(-50%) rotate(90deg);
+ -webkit-transform: translateY(-50%) rotate(90deg);
       -ms-transform: translateY(-50%) rotate(90deg);
-          transform: translateY(-50%) rotate(90deg);
+          transform: translateY(-50%) rotate(90deg);*/
   z-index: 1035;
 }
 .my_switcher ul {
@@ -7813,6 +7818,12 @@ Breadcrumb Styles
   border-radius: 0 100px 100px 0;
   padding-right: 15px;
 }
+
+
+/*<------------------------------------------>*/
+
+
+
 .contact-form--1 .form-group {
   margin-bottom: 20px;
 }
@@ -12390,3 +12401,7 @@ body.active-dark-mode .axil-footer-style-1 .footer-top .inner {
     color: #ffffff;
   }
 }
+
+
+
+

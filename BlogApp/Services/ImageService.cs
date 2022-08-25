@@ -4,9 +4,9 @@ namespace BlogApp.Services
 {
     public class ImageService : IImageService
     {
-        private readonly string _defaultBlogUserImageSrc = "/img/ContactPro.png";
-        private readonly string _defaultBlogPostImageSrc = "/img/ContactProLight.png";
-        private readonly string _defaultCategoryImageSrc = "/img/DefaultContactImage.png";
+        private readonly string _defaultBlogUserImageSrc = "/img/DefaultContactImage.png";
+        private readonly string _defaultBlogPostImageSrc = "/img/DefaultBlogImage.jpg";
+        private readonly string _defaultCategoryImageSrc = "/img/DefaultCategoryImage.jpg";
 
         //C:\Users\dlees\OneDrive\Documents\codeCF\vsRepos\BlogApp\BlogApp\wwwroot\img\DefaultContactImage.png
 
