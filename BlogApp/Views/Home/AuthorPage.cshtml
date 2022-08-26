@@ -55,9 +55,9 @@
                 {
                     <!-- Start Post List  -->
                     <div class="content-block post-list-view mt--30">
-                        <div class="post-thumbnail">
-                            <a asp-controller="BlogPosts" asp-action="Details">
-                                <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!, (int)DefaultImage.BlogPost)" alt="Post Images" />
+                        <div class="post-thumbnail square-img-container">
+                            <a asp-controller="BlogPosts" asp-action="Details" asp-route-slug="@blogPost.Slug">
+                                <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!, (int)DefaultImage.BlogPost)" alt="Post Images" class="square-img" />
                             </a>
                         </div>
                         <div class="post-content">
@@ -119,110 +119,114 @@
 
                     <!-- Start Single Widget  -->
                     <div class="axil-single-widget widget widget_categories mb--30">
-                        <ul>
+                        <h5 class="widget-title">Categories</h5>
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
                             @foreach (Category category in (await _BlogPostService.GetCategoriesAsync()).Take(4))
                             {
-                                <li class="cat-item">
-                                    <a href="#" class="inner">
-                                        <div class="thumbnail square-img-container">
-                                            <img src="@_ImageService.ConvertByteArrayToFile(category.ImageData!,category.ImageType!,(int)DefaultImage.Category))">
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title">@category.Name</h5>
+
+
+
+                                <div class="col">
+                                    <a asp-controller="Categories" asp-action="Details">
+                                        <div class="card">
+                                            <div>
+                                                <img src="@_ImageService.ConvertByteArrayToFile(category.ImageData!,category.ImageType!,(int)DefaultImage.Category)">
+                                            </div>
+                                            <div class="card-body text-center btn btn-primary">
+                                                <h5 class="card-title text-white">@category.Name</h5>
+                                            </div>
                                         </div>
                                     </a>
-                                </li>
+                                </div>
+
+
                             }
-                        </ul>
-                    </div>
+                        </div>
 
 
 
-                    <!-- Start Single Widget  -->
-                    <div class="axil-single-widget widget widget_postlist mb--30">
-                        <h5 class="widget-title">Popular Posts</h5>
-                        <!-- Start Post List  -->
-                        <div class="post-medium-block">
-                            <div class="row row-col-1 row-col-lg-2">
+
+                        <!-- Start Single Widget  -->
+                        <div class="axil-single-widget widget widget_postlist mb--30">
+                            <h5 class="widget-title">Popular Posts</h5>
+                            <!-- Start Post List  -->
+                            <div class="row row-cols-1 row-cols-md-2 g-4">
                                 @foreach (BlogPost blogPost in await _BlogPostService.GetPopularBlogPostAsync(3))
                                 {
-                                    <div class="col square-img-container">
-                                        <a href="post-details.html">
-                                            <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!,(int)DefaultImage.Category)" alt="Post Images" class="square-img rounded-3"/>
-                                        </a>
-                                        <div class="content">
-                                            <h5 class="title">@blogPost.Title</h5>
+                                    <div class="col">
+                                        <div class="card">
+                                            <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!,(int)DefaultImage.Category)" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">@blogPost.Title</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 }
                             </div>
-
-
-
+                            <!-- End Post List  -->
 
                         </div>
-                        <!-- End Post List  -->
-
-                    </div>
-                    <!-- End Single Widget  -->
-                    <!-- Start Single Widget  -->
-                    <div class="axil-single-widget widget widget_instagram mb--30">
-                        <h5 class="widget-title">Recent Blogs</h5>
-                        <!-- Start Post List  -->
-                        <div class="post-medium-block">
-                            <div class="instagram-post-list-wrapper">
+                        <!-- End Single Widget  -->
+                        <!-- Start Single Widget  -->
+                        <div class="axil-single-widget widget widget_instagram mb--30">
+                            <h5 class="widget-title">Recent Blogs</h5>
+                            <!-- Start Post List  -->
+                            <div class=">
+                                <div class="instagram-post-list-wrapper">
 
                                 @*//Use blog post service to create list of recent items*@
                                 @*//Loop over and create list item for each recent blog.*@
                                 @foreach (BlogPost blogPost in await _BlogPostService.GetRecentBlogPostAsync(3))
                                 {
-                                    <div class="square-img-container">
-                                        <a href="post-details.html" >
-                                            <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!,(int)DefaultImage.Category)" alt="Post Images" class="square-img rounded-3"/>
+                                        <a href="post-details.html">
+                                            <div class="square-img-container">
+                                                <div class="square-img">
+                                                    <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!,(int)DefaultImage.Category)" alt="Post Images" />
+                                                </div>
+                                                <div class="content">
+                                                    <h5 class="title">@blogPost.Title</h5>
+                                                </div>
+                                            </div>
                                         </a>
-                                        <div class="content">
-                                            <h5 class="title">@blogPost.Title</h5>
-                                        </div>
-                                    </div>
                                 }
+                                </div>
                             </div>
+                            <!-- End Post List  -->
                         </div>
-                        <!-- End Post List  -->
-                    </div>
 
-                    <!-- Start Stay in Touch Widget  -->
-                    <div class="axil-single-widget widget widget_social mb--30">
-                        <h5 class="widget-title">Stay In Touch</h5>
-                        <!-- Start Post List  -->
-                        <ul class="social-icon md-size justify-content-center">
-                            <li><a href="https://www.linkedin.com/in/danny-schellenberger-9b4b0166/"><i class="fab fa-linkedin-in"></i></a></li>
-                            <li><a href="https://github.com/RokitDan"><i class="fab fa-github"></i></a></li>
-                        </ul>
-                        <!-- End Post List  -->
+                        <!-- Start Stay in Touch Widget  -->
+                        <div class="axil-single-widget widget widget_social mb--30">
+                            <h5 class="widget-title">Stay In Touch</h5>
+                            <!-- Start Post List  -->
+                            <ul class="social-icon md-size justify-content-center">
+                                <li><a href="https://www.linkedin.com/in/danny-schellenberger-9b4b0166/"><i class="fab fa-linkedin-in"></i></a></li>
+                                <li><a href="https://github.com/RokitDan"><i class="fab fa-github"></i></a></li>
+                            </ul>
+                            <!-- End Post List  -->
+                        </div>
+
                     </div>
+                    <!-- End Sidebar Area  -->
+
+
 
                 </div>
-                <!-- End Sidebar Area  -->
-
-
-
             </div>
         </div>
     </div>
-</div>
 
-<!-- End Post List Wrapper  -->
+    <!-- End Post List Wrapper  -->
 @*<!-- Start Instagram Area  -->
-@*<div class="axil-instagram-area axil-section-gap bg-color-grey">*@
+    @*<div class="axil-instagram-area axil-section-gap bg-color-grey">*@
 @*<div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title">
-                    <h2 class="title">Instagram</h2>
-                </div>
-            </div>
-        </div>
+    <div class="row">
+    <div class="col-lg-12">
+    <div class="section-title">
+    <h2 class="title">Instagram</h2>
+    </div>
+    </div>
+    </div>
 
     </div>
-</div>*@
-<!-- End Instagram Area  -->
+    </div>*@
+    <!-- End Instagram Area  -->

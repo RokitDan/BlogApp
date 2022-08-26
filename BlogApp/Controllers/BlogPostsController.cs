@@ -51,10 +51,10 @@ namespace BlogApp.Controllers
 
             List<string> firstNameList = new();
 
-            firstNameList.Add("Danny");
-            firstNameList.Add("Vince");
-            firstNameList.Add("Bethany");
-            firstNameList.Add("Dorothy");
+            //firstNameList.Add("Danny");
+            //firstNameList.Add("Vince");
+            //firstNameList.Add("Bethany");
+            //firstNameList.Add("Dorothy");
 
             //List<string> namesThatStartWithD = new();
 
