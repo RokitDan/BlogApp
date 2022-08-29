@@ -87,7 +87,13 @@
                                         </h6>
                                         <ul class="post-meta-list">
                                             <li>@blogPost.Created.ToString("MMM dd, yyyy")</li>
+                                            @if (blogPost.Comments.Count == 1)
+                                            {
+                                            <li>@blogPost.Comments.Count Comment</li>
+                                            }
+                                            else {
                                             <li>@blogPost.Comments.Count Comments</li>
+                                            }
                                         </ul>
                                     </div>
                                 </div>
