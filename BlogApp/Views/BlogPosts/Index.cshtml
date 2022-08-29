@@ -15,84 +15,40 @@
     <p>
         <a asp-action="Create">Create New</a>
     </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
 
-                <th>
-                    @Html.DisplayNameFor(model => model.Created)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastUpdated)
-                </th>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="card col-3">
+                <img src="@ImageService.ConvertByteArrayToFile(item.ImageData!, item.ImageType!,(int)DefaultImage.BlogPost)" alt="@Html.DisplayFor(modelItem => item.Title) Blog Post Image">
+                <div class="card-body">
 
-                <th>
-                    @Html.DisplayNameFor(model => model.Abstract)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsDeleted)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsPublished)
-                </th>
-
-                <th>
-                    <span>Image</span>
-                </th>
-                <th>
-                    Tag Count
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Created)
-                    </td>
-                    <td>
-                        Last Updated
-                    </td>
-
-                    <td>
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                    <p class="card-text">
                         @Html.DisplayFor(modelItem => item.Abstract)
-                    </td>
-                    <td>
-                        Deleted?
-                    </td>
-                    <td>
-                        Published?
-                    </td>
-                    <td>
-
-                        <img src="@ImageService.ConvertByteArrayToFile(item.ImageData!, item.ImageType!,(int)DefaultImage.BlogPost)" class="square-img rounded-start" alt="..." style="height:120px; width:120px">
-
-                    </td>
-                    <td>
-                        @item.Tags.Count
-                    </td>
-                    <td>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <a asp-action="Details" asp-route-slug="@item.Slug">View Article</a> |
+                    <li class="list-group-item">
                         @Html.DisplayFor(modelItem => item.Category!.Name)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-slug="@item.Slug">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                    </li>
+                    <li class="list-group-item">
+                        @Html.DisplayFor(modelItem => item.Created)
+                    </li>
+                    <li class="list-group-item">
+                        Deleted: @item.IsDeleted
+                    </li>
+                    <li class="list-group-item">
+                        Published: @item.IsPublished
+                    </li>
+                    <li class="list-group-item">
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+                    </li>
+            </div>
+        }
+    </div>
+
+</div>
 </div>

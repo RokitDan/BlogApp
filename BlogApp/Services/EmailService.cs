@@ -1,6 +1,6 @@
 ﻿using BlogApp.Models;
 using BlogApp.Services.Interfaces;
-using BlogApp.Models.ViewModels;
+
 using System.Text;
 using MailKit.Net.Smtp;
 using MailKit.Security;

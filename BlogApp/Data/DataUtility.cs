@@ -112,8 +112,8 @@ namespace BlogApp.Data
                     PhoneNumber = "123-123-1234",
                     EmailConfirmed = true
                 };
-
-                await userManager.CreateAsync(adminUser, configuration["AdminPwd"] ?? Environment.GetEnvironmentVariable("AdminPwd"));
+                var pwd = configuration["BlogPasswords:AdminPwd"];
+                await userManager.CreateAsync(adminUser, pwd ?? Environment.GetEnvironmentVariable("AdminPwd"));
                 await userManager.AddToRoleAsync(adminUser, _adminRole);
 
             }
@@ -132,7 +132,7 @@ namespace BlogApp.Data
 
                 try
                 {
-                    await userManager.CreateAsync(anonUser, configuration["AnonPwd"]);
+                    await userManager.CreateAsync(anonUser, configuration["BlogPasswords:AnonPwd"]);
 
                 }
                 catch (Exception ex)

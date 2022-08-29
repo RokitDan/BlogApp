@@ -165,7 +165,10 @@
                                 }
                             </div>
                         </figure>
-                        <p>@Model.Content</p>
+
+                        <p>
+                            @Html.Raw(Model.Content)
+                        </p>
 
                         <figure class="wp-block-image">
                             <div>

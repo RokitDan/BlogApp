@@ -71,7 +71,7 @@
                                 </div>
                             </div>
                             <h4 class="title">
-                                <a href="post-details.html">
+                                <a asp-controller="BlogPosts" asp-action="Details" asp-route-slug="@blogPost.Slug">
                                     @blogPost.Title
                                 </a>
                             </h4>
@@ -91,12 +91,6 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <ul class="social-share-transparent justify-content-end">
-                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fas fa-link"></i></a></li>
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -127,7 +121,7 @@
 
 
                                 <div class="col">
-                                    <a asp-controller="Categories" asp-action="Details">
+                                    <a asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id">
                                         <div class="card">
                                             <div>
                                                 <img src="@_ImageService.ConvertByteArrayToFile(category.ImageData!,category.ImageType!,(int)DefaultImage.Category)">
