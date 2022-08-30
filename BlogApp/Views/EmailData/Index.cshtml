@@ -1,13 +1,15 @@
 ﻿@model BlogApp.Models.EmailData;
 
-<div class="p-2">
+<div class="p-2 container mt-5 h-100">
     <form asp-action="SendEmailAdmin" asp-controller="EmailData" method="post">
 
 
 
         @if (User.Identity!.IsAuthenticated == false)
         {
-            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login to Send Email</a>
+            <div class="text-center">
+                <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Login">Login to Send Email</a>
+            </div>
         }
         else
         {
@@ -34,7 +36,6 @@
             </div>
         }
     </form>
-</div>
-<div class="p-2">
-    <a asp-action="Index">Back to List</a>
+
+
 </div>

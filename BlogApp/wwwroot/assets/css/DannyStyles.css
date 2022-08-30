@@ -16,9 +16,7 @@
     object-position: center;
 }
 
-.pill {
-    border-radius: 100px !important;
-}
+
 
 
 .btn-primary {
@@ -28,4 +26,15 @@
 
 .mainLogo {
     max-width: 800px;
+}
+
+.footer {
+    flex-shrink: 0 !important;
+    background-color: #e56363 !important;
+    color: white !important;
+}
+
+.redCardBG {
+    background-color: #e56363 !important;
+    color: white !important;
 }

@@ -105,15 +105,7 @@
                             @Html.Raw(Model.Content)
                         </p>
 
-                        <figure class="wp-block-image">
-                            <div>
-                                <img src="@_ImageService.ConvertByteArrayToFile(Model.ImageData!, Model.ImageType!,(int)DefaultImage.BlogPost)" alt="Post Images" />
-                            </div>
-                            <figcaption>
-                                The Apple Design Award trophy, created by the Apple Design
-                                team, is a symbol of achievement and excellence.
-                            </figcaption>
-                        </figure>
+
                         @foreach (Tag tag in Model.Tags)
                         {
                             <div class="tagcloud">
@@ -126,58 +118,30 @@
                                 ><i class="fal fa-thumbs-up"></i><span>2.2k Like</span></a
                               >
                             </div> -->
-                            <ul class="social-icon icon-rounded-transparent md-size">
-                                <li>
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                </li>
-                            </ul>
+
                         </div>
 
                         <!-- Start Author  -->
                         <div class="about-author">
                             <div class="media">
-                                <div class="thumbnail">
-                                    <a href="#"></a>
-                                </div>
+
                                 <div class="media-body">
                                     <div class="author-info">
                                         <h5 class="title">
-                                            <a class="hover-flip-item-wrapper" href="#">
-                                                <span class="hover-flip-item">
-                                                    <span data-text="Danny Schellenberger">Danny Schellenberger</span>
-                                                </span>
-                                            </a>
+                                            Danny Schellenberger
                                         </h5>
-                                        <span class="b3 subtitle">Web Developer</span>
+                                        <span class="b3 subtitle mb-5">Full-Stack Web Developer</span>
                                     </div>
                                     <div class="content">
-                                        <p class="b1 description">About Danny</p>
-                                        <ul class="social-share-transparent size-md">
+                                        <ul class="social-icon icon-rounded-transparent md-size">
                                             <li>
-                                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                                <a href="https://www.linkedin.com/in/danny-schellenberger-9b4b0166/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="fab fa-instagram"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="far fa-envelope"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                                <a href="https://github.com/RokitDan" target="_blank"><i class="fab fa-github"></i></a>
                                             </li>
                                         </ul>
+
                                     </div>
                                 </div>
                             </div>
@@ -282,119 +246,5 @@
         </div>
     </div>
     <!-- End Post Single Wrapper  -->
-    <!-- Start More Stories Area  -->
-    <div class="axil-more-stories-area axil-section-gap bg-color-grey">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <h2 class="title">More Stories</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <!-- Start Stories Post  -->
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <!-- Start Post List  -->
-                    <div class="post-stories content-block mt--30">
-                        <div class="post-thumbnail">
-                            <a href="post-details.html">
-                                <img src="assets/images/post-single/stories-01.jpg"
-                                     alt="Post Images" />
-                            </a>
-                        </div>
-                        <div class="post-content">
-                            <div class="post-cat">
-                                <div class="post-@Model.Category>
-                                </div>
-                            </div>
-                            <h5 class="title">
-                                <a href="post-details.html">
-                                        @Model.Abstract
-                                </a>
-                            </h5>
-                        </div>
-                    </div>
-                    <!-- End Post List  -->
-                </div>
 
-                <!-- Start Instagram Area  -->
-                <div class="axil-instagram-area axil-section-gap bg-color-extra03">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="section-title">
-                                    <h2 class="title">Instagram</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt--30">
-                            <div class="col-lg-12">
-                                <ul class="instagram-post-list">
-                                    <li class="single-post">
-                                        <a href="#">
-                                            <img src="assets/images/small-images/instagram-md-01.jpg"
-                                                 alt="Instagram Images" />
-                                            <span class="instagram-button">
-                                                <i class="fab fa-instagram"></i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="single-post">
-                                        <a href="#">
-                                            <img src="assets/images/small-images/instagram-md-02.jpg"
-                                                 alt="Instagram Images" />
-                                            <span class="instagram-button">
-                                                <i class="fab fa-instagram"></i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="single-post">
-                                        <a href="#">
-                                            <img src="assets/images/small-images/instagram-md-03.jpg"
-                                                 alt="Instagram Images" />
-                                            <span class="instagram-button">
-                                                <i class="fab fa-instagram"></i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="single-post">
-                                        <a href="#">
-                                            <img src="assets/images/small-images/instagram-md-04.jpg"
-                                                 alt="Instagram Images" />
-                                            <span class="instagram-button">
-                                                <i class="fab fa-instagram"></i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="single-post">
-                                        <a href="#">
-                                            <img src="assets/images/small-images/instagram-md-05.jpg"
-                                                 alt="Instagram Images" />
-                                            <span class="instagram-button">
-                                                <i class="fab fa-instagram"></i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="single-post">
-                                        <a href="#">
-                                            <img src="assets/images/small-images/instagram-md-06.jpg"
-                                                 alt="Instagram Images" />
-                                            <span class="instagram-button">
-                                                <i class="fab fa-instagram"></i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Instagram Area  -->
-                <!-- Start Back To Top  -->
-                <a id="backto-top"></a>
-                <!-- End Back To Top  -->
-            </div>
-        </div>
-    </div>
 </body>
