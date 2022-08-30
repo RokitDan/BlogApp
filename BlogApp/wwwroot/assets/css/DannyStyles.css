@@ -25,3 +25,7 @@
     background-color: #e56363 !important;
     border: none !important;
 }
+
+.mainLogo {
+    max-width: 800px;
+}

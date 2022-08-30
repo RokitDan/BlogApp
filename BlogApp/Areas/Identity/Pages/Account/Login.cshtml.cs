@@ -27,6 +27,15 @@ namespace BlogApp.Areas.Identity.Pages.Account
         {
             _signInManager = signInManager;
             _logger = logger;
+
+#if DEBUG
+            Input = new();
+            Input.Email = "dleeschelltest@gmail.com";
+            Input.Password = "Majora9898!";
+#endif
+
+
+
         }
 
         /// <summary>
@@ -83,6 +92,8 @@ namespace BlogApp.Areas.Identity.Pages.Account
             /// </summary>
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
+
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)
