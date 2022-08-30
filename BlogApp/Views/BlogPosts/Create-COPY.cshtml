@@ -1,0 +1,114 @@
+﻿@model BlogApp.Models.ViewModels.CreateBlogPost
+@using BlogApp.Services.Interfaces
+@using BlogApp.Services
+
+
+@inject IImageService _ImageService;
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<link rel="stylesheet" type="text/css" href="~/ckeditor5-35/sample/styles.css">"
+
+<h1>Create</h1>
+
+<h4>BlogPost</h4>
+<hr />
+<div class="container">
+<div class="row">
+    <div class="col-md-4 col-lg-12">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BlogPost.Title" class="control-label"></label>
+                <input asp-for="BlogPost.Title" class="form-control" />
+                <span asp-validation-for="BlogPost.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BlogPost.Content" class="control-label"></label>
+                <textarea asp-for="BlogPost.Content" class="form-control editor"></textarea>
+                <span asp-validation-for="BlogPost.Content" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BlogPost.CategoryId" class="control-label">Category</label>
+                <select asp-for="BlogPost.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BlogPost.Abstract" class="control-label"></label>
+                <input asp-for="BlogPost.Abstract" class="form-control" />
+                <span asp-validation-for="BlogPost.Abstract" class="text-danger"></span>
+            </div>
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BlogPost.IsPublished" /> @Html.DisplayNameFor(model => model.BlogPost.IsPublished)
+                </label>
+            </div>
+
+
+            <div>
+                <label asp-for="BlogPost.BlogPostImage" class="form-label"></label>
+                <input asp-for="BlogPost.BlogPostImage" class="form-control" accept=".png,.jpg,.jpeg,.gif"
+                       onchange="document.getElementById('imageData').src = window.URL.createObjectURL(this.files[0])" />
+                <span asp-validation-for="BlogPost.BlogPostImage" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Tags" class="control-label">Tags</label>
+                @*ViewBag is built into ASP*@
+                <select name="selectedTags" class="form-select" asp-items="ViewBag.BlogPostTags" multiple aria-label="multiple select example">
+                </select>
+            </div>
+
+           @foreach(Tag tag in Model.Tags)
+                {
+                    <div class="form-check">
+                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                          <label class="form-check-label" for="flexCheckDefault">
+                            @tag.Name
+                          </label>
+                    </div>
+                }
+
+          
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+        <script src="~/ckeditor5-35/build/ckeditor.js"></script>
+
+        <script>
+            ClassicEditor
+                .create(document.querySelector('.editor'), {
+                    licenseKey: '',
+
+                })
+                .then(editor => {
+                    window.editor = editor;
+
+
+                })
+                .catch(error => {
+                    console.error('Oops, something went wrong!');
+                    console.error('Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
+                    console.warn('Build id: xx09iayzufkn-lkt434h3lx2z');
+                    console.error(error);
+                });
+        </script>
+    }
+    }
