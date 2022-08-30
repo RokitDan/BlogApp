@@ -8945,9 +8945,11 @@ Breadcrumb Styles
 
 /*<------------------------------------------>*/
 
-/*.my_switcher {*/
-/*position: fixed;*/
-/*z-index: 2035;
+.my_switcher {
+    position: fixed;
+    bottom: 25px;
+    transform: translateX(20px);
+    z-index: 2035;
 }
 
     .my_switcher ul {
@@ -9005,7 +9007,7 @@ Breadcrumb Styles
             border-left-width: 1px;
             border-radius: 0 100px 100px 0;
             padding-right: 15px;
-        }*/
+        }
 
 
 /*<------------------------------------------>*/
