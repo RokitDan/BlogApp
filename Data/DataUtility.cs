@@ -117,31 +117,6 @@ namespace BlogApp.Data
                 await userManager.AddToRoleAsync(adminUser, _adminRole);
 
             }
-
-            if (!context.Users.Any(u => u.Email == "thisguy@email.com"))
-            {
-                BlogUser anonUser = new()
-                {
-                    Email = "thisguy@email.com",
-                    UserName = "thisguy@email.com",
-                    FirstName = "This",
-                    LastName = "Guy",
-                    PhoneNumber = "123-123-1234",
-                    EmailConfirmed = true
-                };
-
-                try
-                {
-                    await userManager.CreateAsync(anonUser, configuration["BlogPasswords:AnonPwd"]);
-
-                }
-                catch (Exception ex)
-                {
-                    var err = ex.Message;
-                    throw;
-                }
-
-            }
         }
 
         //Add moderator
