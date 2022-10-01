@@ -7,6 +7,7 @@ using BlogApp.Services.Interfaces;
 using BlogApp.Services;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using BlogApp.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,7 +84,6 @@ var scope = app.Services.CreateScope();
 await DataHelper.ManageDataAsync(scope.ServiceProvider);
 
 
-var scope = app.Services.CreateScope();
 await DataUtility.SeedDataAsync(scope.ServiceProvider);
 
 // Configure the HTTP request pipeline.
