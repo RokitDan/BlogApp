@@ -51,23 +51,7 @@ namespace BlogApp.Controllers
 
             List<string> firstNameList = new();
 
-            //firstNameList.Add("Danny");
-            //firstNameList.Add("Vince");
-            //firstNameList.Add("Bethany");
-            //firstNameList.Add("Dorothy");
-
-            //List<string> namesThatStartWithD = new();
-
-            //foreach (string firstName in firstNameList)
-            //{
-            //    if (firstName.StartsWith("D"))
-            //    {
-            //        namesThatStartWithD.Add(firstName);
-            //    }
-            //}
-
-            //namesThatStartWithD = firstNameList.Where(x => x.StartsWith("D")).ToList();
-
+     
             return View(blogPosts);
         }
 
@@ -142,6 +126,7 @@ namespace BlogApp.Controllers
 
                 try
                 {
+                    blogPost.IsPublished = true;
                     _context.Add(blogPost);
                     await _context.SaveChangesAsync();
 
@@ -299,6 +284,7 @@ namespace BlogApp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
 
         private bool BlogPostExists(int id)
         {

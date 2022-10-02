@@ -140,10 +140,6 @@ namespace BlogApp.Services
             }
         }
 
-        public Task<List<BlogPost>> GetAllBlogPostAsync()
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<List<Category>> GetCategoriesAsync()
         {

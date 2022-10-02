@@ -127,7 +127,7 @@
                     <!-- Start Search Widget  -->
                     <div class="axil-single-widget widget widget_search mb--30">
                         <h5 class="widget-title">Search</h5>
-                        <form action="#">
+                        <form asp-action="SearchIndex" asp-controller="BlogPosts">
                             <div class="axil-search form-group">
                                 <button type="submit" class="search-button"><i class="fal fa-search"></i></button>
                                 <input type="text" class="form-control" placeholder="Search">
@@ -144,87 +144,91 @@
 
 
 
-                                <div class="col">
-                                    <a asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id">
+                                <a asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id">
+                                    <div class="col">
                                         <div class="card">
                                             <div>
                                                 <img src="@_ImageService.ConvertByteArrayToFile(category.ImageData!,category.ImageType!,(int)DefaultImage.Category)">
                                             </div>
                                             <div class="card-body text-center redCardBG">
-                                                <h5 class="card-title ">@category.Name</h5>
+                                                <h5 class="card-title text-white">@category.Name</h5>
                                             </div>
                                         </div>
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
 
 
                             }
                         </div>
+                    </div>
 
 
 
 
-                        <!-- Start Single Widget  -->
-                        <div class="axil-single-widget widget widget_postlist mb--30">
-                            <h5 class="widget-title">Popular Posts</h5>
-                            <!-- Start Post List  -->
-                            <div class="row row-cols-1 row-cols-md-2 g-4">
-                                @foreach (BlogPost blogPost in await _BlogPostService.GetPopularBlogPostAsync(3))
-                                {
+                    <!-- Start Single Widget  -->
+                    <div class="axil-single-widget widget widget_categories mb--30">
+                        <h5 class="widget-title">Popular Blog Posts</h5>
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                            @foreach (BlogPost blogPost in await _BlogPostService.GetPopularBlogPostAsync(3))
+                            {
+                                <a asp-controller="BlogPosts" asp-action="Details" asp-route-slug="@blogPost.Slug">
                                     <div class="col">
                                         <div class="card">
-                                            <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!,(int)DefaultImage.Category)" class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">@blogPost.Title</h5>
+                                            <div>
+                                                <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!,blogPost.ImageType!,(int)DefaultImage.Category)">
+                                            </div>
+                                            <div class="card-body text-center redCardBG">
+                                                <h5 class="card-title text-white">@blogPost.Title</h5>
                                             </div>
                                         </div>
                                     </div>
-                                }
-                            </div>
-                            <!-- End Post List  -->
 
+                                </a>
+                            }
                         </div>
-                        <!-- End Single Widget  -->
-                        <!-- Start Single Widget  -->
-                        <div class="axil-single-widget widget widget_instagram mb--30">
-                            <h5 class="widget-title">Recent Blogs</h5>
-                            <!-- Start Post List  -->
-                            <div class=">
-                                <div class="instagram-post-list-wrapper">
-
-                                @*//Use blog post service to create list of recent items*@
-                                @*//Loop over and create list item for each recent blog.*@
-                                @foreach (BlogPost blogPost in await _BlogPostService.GetRecentBlogPostAsync(3))
-                                {
-                                        <a href="post-details.html">
-                                            <div class="square-img-container">
-                                                <div class="square-img">
-                                                    <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!, blogPost.ImageType!,(int)DefaultImage.Category)" alt="Post Images" />
-                                                </div>
-                                                <div class="content">
-                                                    <h5 class="title">@blogPost.Title</h5>
-                                                </div>
-                                            </div>
-                                        </a>
-                                }
-                                </div>
-                            </div>
-                            <!-- End Post List  -->
-                        </div>
-
-
+                        <!-- End Post List  -->
 
                     </div>
-                    <!-- End Sidebar Area  -->
+                    <!-- End Single Widget  -->
+                    <!-- Start Single Widget  -->
+                    <div class="axil-single-widget widget widget_categories mb--30">
+                        <h5 class="widget-title">Popular Blog Posts</h5>
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
 
+                            @foreach (BlogPost blogPost in await _BlogPostService.GetRecentBlogPostAsync(3))
+                            {
+                                <a asp-controller="BlogPosts" asp-action="Details" asp-route-slug="@blogPost.Slug">
+                                    <div class="col">
+                                        <div class="card">
+                                            <div>
+                                                <img src="@_ImageService.ConvertByteArrayToFile(blogPost.ImageData!,blogPost.ImageType!,(int)DefaultImage.Category)">
+                                            </div>
+                                            <div class="card-body text-center redCardBG">
+                                                <h5 class="card-title text-white">@blogPost.Title</h5>
+                                            </div>
+                                        </div>
+                                    </div>
 
-
+                                </a>
+                            }
+                        </div>
+                    </div>
+                    <!-- End Post List  -->
                 </div>
+
+
+
             </div>
+            <!-- End Sidebar Area  -->
+
+
+
         </div>
     </div>
+</div>
+</div>
 
-    <!-- End Post List Wrapper  -->
+<!-- End Post List Wrapper  -->
 @*<!-- Start Instagram Area  -->
     @*<div class="axil-instagram-area axil-section-gap bg-color-grey">*@
 @*<div class="container">
@@ -238,4 +242,4 @@
 
     </div>
     </div>*@
-    <!-- End Instagram Area  -->
+<!-- End Instagram Area  -->

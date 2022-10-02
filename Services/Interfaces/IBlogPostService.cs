@@ -13,8 +13,6 @@ namespace BlogApp.Services.Interfaces
         public Task RemoveTagFromBlogPostAsync(int tagId, int blogPostId);
         public Task<IEnumerable<int>> GetBlogTagIdsAsync(int blogTagId);
 
-        public Task<List<BlogPost>> GetAllBlogPostAsync(); //All Posts regardless of IsDeleted or IsDeleted
-
         //New methods 08/12/22
 
         public Task<List<Category>> GetCategoriesAsync();
