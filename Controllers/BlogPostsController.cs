@@ -34,7 +34,7 @@ namespace BlogApp.Controllers
         {
             //To do: Use service
 
-            var applicationDbContext = _context.BlogPosts.Where(b => b.IsDeleted == false).Include(b => b.Category).Include(b => b.Tags);
+            var applicationDbContext = _context.BlogPosts.Include(b => b.Category).Include(b => b.Tags);
             return View(await applicationDbContext.ToListAsync());
         }
 
