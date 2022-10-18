@@ -184,6 +184,7 @@ namespace BlogApp.Controllers
             {
                 try
                 {
+                    blogPost.IsPublished = true;
                     blogPost.Created = DataUtility.GetPostGresDate(blogPost.Created);
                     blogPost.LastUpdated = DataUtility.GetPostGresDate(DateTime.Now);
                     _context.Update(blogPost);
