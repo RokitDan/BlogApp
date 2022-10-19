@@ -169,7 +169,7 @@
                     <div class="axil-single-widget widget widget_categories mb--30">
                         <h5 class="widget-title">Popular Blog Posts</h5>
                         <div class="row row-cols-1 row-cols-md-2 g-4">
-                            @foreach (BlogPost blogPost in await _BlogPostService.GetPopularBlogPostAsync(3))
+                            @foreach (BlogPost blogPost in await _BlogPostService.GetPopularBlogPostAsync(4))
                             {
                                 <a asp-controller="BlogPosts" asp-action="Details" asp-route-slug="@blogPost.Slug">
                                     <div class="col">
@@ -192,10 +192,10 @@
                     <!-- End Single Widget  -->
                     <!-- Start Single Widget  -->
                     <div class="axil-single-widget widget widget_categories mb--30">
-                        <h5 class="widget-title">Popular Blog Posts</h5>
+                        <h5 class="widget-title">Recent Blog Posts</h5>
                         <div class="row row-cols-1 row-cols-md-2 g-4">
 
-                            @foreach (BlogPost blogPost in await _BlogPostService.GetRecentBlogPostAsync(3))
+                            @foreach (BlogPost blogPost in await _BlogPostService.GetRecentBlogPostAsync(4))
                             {
                                 <a asp-controller="BlogPosts" asp-action="Details" asp-route-slug="@blogPost.Slug">
                                     <div class="col">

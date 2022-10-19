@@ -98,21 +98,21 @@
                                                         <a href="#">Posts</a>
                                                         <ul class="axil-submenu">
                                                             <li>
-                                                                <a asp-controller="BlogPosts" asp-action="Index">
-                                                                    <span class="">
-                                                                        <span>All Posts</span>
-                                                                    </span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="hover-flip-item-wrapper" href="post-format-video.html">
+                                                                <a asp-controller="BlogPosts" asp-action="AllBlogPosts" class="hover-flip-item-wrapper">
                                                                     <span class="hover-flip-item">
-                                                                        <span> data-text="Popular Posts"Popular Posts</span>
+                                                                        <span data-text="All Posts">All Posts</span>
                                                                     </span>
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a class="hover-flip-item-wrapper" href="post-format-video.html">
+                                                                <a asp-controller="BlogPosts" asp-action="PopularBlogPosts" class="hover-flip-item-wrapper">
+                                                                    <span class="hover-flip-item">
+                                                                        <span data-text="Popular Posts">Popular Posts</span>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a asp-controller="BlogPosts" asp-action="RecentBlogPosts" class="hover-flip-item-wrapper">
                                                                     <span class="hover-flip-item">
                                                                         <span data-text="Recent Posts">Recent Posts</span>
                                                                     </span>

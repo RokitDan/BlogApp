@@ -177,8 +177,11 @@ namespace BlogApp.Services
         {
             try
             {
+                
                 List<BlogPost> blogPosts = await _context.BlogPosts.Where(b => b.IsDeleted == false && b.IsPublished == true).Include(b => b.Comments).ThenInclude(c => c.Author).Include(b => b.Tags).ToListAsync();
-                return blogPosts.OrderByDescending(b => b.Comments.Count).Take(count).ToList();
+                return count == 0
+                              ? blogPosts.OrderByDescending(b => b.Comments.Count).ToList()
+                              : blogPosts.OrderByDescending(b => b.Comments.Count).Take(count).ToList();
             }
             catch (Exception)
             {
@@ -191,7 +194,9 @@ namespace BlogApp.Services
             try
             {
                 List<BlogPost> blogPosts = await _context.BlogPosts.Where(b => b.IsDeleted == false && b.IsPublished == true).Include(b => b.Comments).ThenInclude(c => c.Author).Include(b => b.Tags).ToListAsync();
-                return blogPosts.OrderByDescending(b => b.LastUpdated).Take(count).ToList();
+                return count == 0
+                            ? blogPosts.OrderByDescending(b => b.LastUpdated).ToList()
+                            : blogPosts.OrderByDescending(b => b.LastUpdated).Take(count).ToList();
             }
 
             catch (Exception)

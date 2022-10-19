@@ -30,12 +30,38 @@ namespace BlogApp.Controllers
         }
 
         // GET: BlogPosts
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             //To do: Use service
 
             var applicationDbContext = _context.BlogPosts.Include(b => b.Category).Include(b => b.Tags);
             return View(await applicationDbContext.ToListAsync());
+        }
+
+
+        [AllowAnonymous]
+        public async Task<IActionResult> AllBlogPosts()
+        {
+           
+            var allBlogPosts = await _blogPostService.GetAllBlogPostsAsync();
+            return View(allBlogPosts);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> RecentBlogPosts(int count)
+        {
+
+            var recentBlogPosts = await _blogPostService.GetRecentBlogPostAsync(count);
+            return View(recentBlogPosts);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> PopularBlogPosts(int count)
+        {
+
+            var popularBlogPosts = await _blogPostService.GetPopularBlogPostAsync(count);
+            return View(popularBlogPosts);
         }
 
         [AllowAnonymous]
