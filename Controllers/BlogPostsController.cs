@@ -43,7 +43,7 @@ namespace BlogApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AllBlogPosts()
         {
-           
+
             var allBlogPosts = await _blogPostService.GetAllBlogPostsAsync();
             return View(allBlogPosts);
         }
@@ -77,7 +77,7 @@ namespace BlogApp.Controllers
 
             List<string> firstNameList = new();
 
-     
+
             return View(blogPosts);
         }
 
@@ -235,8 +235,6 @@ namespace BlogApp.Controllers
 
                     _context.Update(blogPost);
 
-                    //List<Tag> oldTags = (await _addressBookService.GetContactCategoriesAsync(contact.Id)).ToList();
-
                     List<int> oldTags = (await _blogPostService.GetBlogTagIdsAsync(blogPost.Id)).ToList();
 
 
@@ -245,8 +243,6 @@ namespace BlogApp.Controllers
                     {
                         await _blogPostService.RemoveTagFromBlogPostAsync(tag1, blogPost.Id)!;
                     }
-
-
 
                     //Add new tags to blog
                     foreach (int tagId in selectedTags)
@@ -317,5 +313,16 @@ namespace BlogApp.Controllers
         {
             return (_context.BlogPosts?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+
+        //PARTIALS-----------------------------------------------------------------------------------------------
+
+        public async Task<IActionResult> CurrentBlogPostList()
+        {
+            List<BlogPost> currentBlogPosts = await _blogPostService.GetAllBlogPostsAsync();
+            return PartialView("_BlogPostList", currentBlogPosts);
+        }
+
     }
+
 }
